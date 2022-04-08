@@ -1,11 +1,12 @@
 const mongoose = require("mongoose");
 const db = require("./index.js");
 
-const itemSchema = new mongoose.Schema({
+const dailyGoalSchema = new mongoose.Schema({
+  title:String,
   description: String,
-  quantity: Number,
+  progress: Number,
 });
 
-const Item = mongoose.model("Item", itemSchema);
+const dailyGoal = mongoose.model("dailyGoal", dailyGoalSchema);
 
-module.exports = Item;
+module.exports = dailyGoal;

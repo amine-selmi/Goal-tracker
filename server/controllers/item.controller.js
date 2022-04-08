@@ -1,40 +1,45 @@
-// DELETE THIS LINE
-var selectAll = () => {};
+var dailyGoal = require("../database-mongo/Item.model.js");
 
-// UNCOMMENT THE DATABASE YOU'D LIKE TO USE
-// var db = require("../database-mysql");
-// var Item = require('../database-mongo/Item.model.js');
+var selectAll = function (req, res) {
+  dailyGoal
+    .find({})
+    .then((items) => {
+      res.status(200).send(items);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+};
 
-// UNCOMMENT IF USING MYSQL WITH CALLBACKS
-// var selectAll = function (req, res) {
-//   db.query("SELECT * FROM items", (err, items, fields) => {
-//     if (err) {
-//       res.status(500).send(err);
-//     } else {
-//       res.status(200).send(items);
-//     }
-//   });
-// };
+let addDGoal = function (req, res) {
+  let { title, description, progress } = req.body;
+  dailyGoal
+    .insertMany({ title, description, progress })
+    .then((items) => {
+      console.log(items, "from addDGoal");
+      res.status(200).send(items);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+};
 
-// UNCOMMENT IF USING MONGOOSE WITH PROMISES
-// var selectAll = function (req, res) {
-//   Item.find({})
-//     .then((items) => {
-//       res.status(200).send(items);
-//     })
-//     .catch((error) => {
-//       res.status(500).send(error);
-//     });
-// };
+let deleteDGoal = (req, res) => {
+  let { id } = req.params;
+  console.log(id, "from deleDGoal");
+  dailyGoal
+    .deleteOne({ _id: id })
+    .then((result) => res.status(200).send(result))
+    .catch((err) => res.status(500).send(err));
+};
 
-// UNCOMMENT IF USING MONGOOSE WITH PROMISES & ASYNC AWAIT
-// var selectAll = async function (req, res) {
-//   try {
-//     const items = await Item.find({});
-//     res.status(200).send(items);
-//   } catch (error) {
-//     res.status(200).send(error);
-//   }
-// };
+let updateDGoal = (req, res) => {
+  let { title, description } = req.body;
+  let { id } = req.params;
+  dailyGoal
+    .updateOne({ _id: id }, { title, description })
+    .then((result) => res.status(200).send(result))
+    .catch((err) => res.status(500).send(err));
+};
 
-module.exports = { selectAll };
+module.exports = { selectAll, addDGoal, deleteDGoal,updateDGoal };
