@@ -73,9 +73,9 @@ export default class MyGoal extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{textAlign: "center"}}>
         <span>{this.props.goal.title}</span>
-        <p>you have {this.props.goal.tasks.length} incomplete tasks </p>
+        <p>you have {this.props.goal.tasks.length} tasks </p>
         
         {/* {console.log(this.state.tasks,'tasks from state')} */}
         {this.state.tasks.map((task,index)=>{

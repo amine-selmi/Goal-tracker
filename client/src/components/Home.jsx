@@ -22,7 +22,6 @@ export default class Home extends Component {
     $.post("/api/items/add", {
       title: this.state.term,
     }).then((data) => {
-        this.props.getItems();
         this.setState({
             term:''
         })
@@ -32,14 +31,22 @@ export default class Home extends Component {
 
   render() {
     return (
-      <div>
-        <span>set up your goal</span>
+      <div style={{textAlign: "center"}}>
+        <span style={{fontFamily: "Arial",textAlign: "center"}}>Set up your goal</span><br/>
         <input
           type="text"
           value={this.state.term}
           onChange={this.onChangeTitle}
-        ></input>
-        <button onClick={this.handleSaveBtn}>Save</button>
+          style={{
+            borderRadius:"5px"
+          }}
+        ></input><br/>
+        <button onClick={()=>{
+          this.handleSaveBtn()
+          this.props.getGoals()
+          this.props.changeView("list goals")
+          
+          }}>Save</button>
       </div>
     );
   }

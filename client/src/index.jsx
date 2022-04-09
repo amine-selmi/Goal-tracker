@@ -60,6 +60,20 @@ class App extends React.Component {
     this.getGoals()
   }
 
+  deleteGoal(id){
+    $.ajax({
+      method:'DELETE',
+      url:`/api/items/delete/${id}`,
+      success: (data) => {
+        console.log(data)
+      //  this.getGoals()
+      },
+      error: (err) => {
+        console.log('err', err);
+      }
+    });
+  }
+
   changeView(option) {
     this.setState({
       view: option
@@ -71,10 +85,16 @@ class App extends React.Component {
     if (this.state.view === "create goal") {
       return (
         
-        <Home  />
+        <Home getGoals={this.getGoals}
+        changeView ={this.changeView}
+         />
       );
     } else if (this.state.view === "list goals") {
-      return <h1> <List items={this.state.items} getClickedGoal={this.getClickedGoal} /> </h1>;
+      return <h1> <List items={this.state.items}
+       getClickedGoal={this.getClickedGoal} 
+       deleteGoal={this.deleteGoal}
+       getGoals={this.getGoals}
+       /> </h1>;
     } 
     else if (this.state.view === "my goal") {
       console.log(this.state.view,'check the state')
@@ -93,7 +113,9 @@ class App extends React.Component {
           <span className={this.state.view === 'list goals'
             ? 'nav-selected'
             : 'nav-unselected'}
-          onClick={() => this.changeView('list goals')}>
+          onClick={() => {this.changeView('list goals')
+                          this.getGoals()
+          }}>
            Check Your Goals
           </span>
           <span className={this.state.view === 'create goal'
