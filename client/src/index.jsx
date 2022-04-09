@@ -4,19 +4,21 @@ import $ from 'jquery';
 import List from './components/List.jsx';
 import Home from './components/Home.jsx'
 
+
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       items: [],
-      view: 'home',
+      view: 'list goals',
       index:0
     }
     this.changeView = this.changeView.bind(this);
     this.renderView= this.renderView.bind(this);
+    this.getGoals =  this.getGoals.bind(this)
   }
 
-  componentDidMount() {
+  getGoals(){
     $.ajax({
       url: '/api/items',
       success: (data) => {
@@ -31,6 +33,10 @@ class App extends React.Component {
     });
   }
 
+  componentDidMount() {
+    this.getGoals()
+  }
+
   changeView(option) {
     this.setState({
       view: option
@@ -39,7 +45,7 @@ class App extends React.Component {
   }
 
   renderView() {
-    if (this.state.view === "home") {
+    if (this.state.view === "create goal") {
       return (
         
         <Home  />
@@ -47,11 +53,11 @@ class App extends React.Component {
     } else if (this.state.view === "list goals") {
       return <h1> <List items={this.state.items} /> </h1>;
     } 
-    // else if (this.state.view === "createPost") {
-    //   console.log(this.state.view,'check the state')
+    else if (this.state.view === "my goal") {
+      console.log(this.state.view,'check the state')
 
-    //   return <div> <CreatePost/> </div>;
-    // }
+      return <div> <CreatePost/> </div>;
+    }
   }
 
   render () {
@@ -67,11 +73,17 @@ class App extends React.Component {
           onClick={() => this.changeView('list goals')}>
            Check Your Goals
           </span>
-          <span className={this.state.view === 'home'
+          <span className={this.state.view === 'create goal'
             ? 'nav-selected'
             : 'nav-unselected'}
-          onClick={() => this.changeView('home')}>
+          onClick={() => this.changeView('create goal')}>
            Set new Goal
+          </span>
+          <span className={this.state.view === 'create goal'
+            ? 'nav-selected'
+            : 'nav-unselected'}
+          onClick={() => this.changeView('create goal')}>
+           my Goal
           </span>
         </div>
 

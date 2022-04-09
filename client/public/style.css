@@ -5,6 +5,7 @@ body {
   margin: 0px;
   color: #292929;
   background-color: #F3F3F3;
+  box-sizing: border-box;
 }
 
 button {
@@ -32,22 +33,8 @@ button {
   border-radius: 10px;
 }
 
-.card-kor {
-  font-size: 3em;
-  margin-top: 30px;
-}
 
-.card-rom {
-  font-style: italic;
-  margin: 15px;
-  color: rgba(0, 0, 0, .5);
-  font-size: 1.2em;
-}
 
-.card-eng {
-  margin: 15px;
-  font-size: 1.5em;
-}
 
 .logo {
   font-size: 1.9em;
@@ -83,59 +70,7 @@ button {
   font-size: 1.1em;
 }
 
-
-.phrases {
-  margin: 20px;
-}
-
-.phrase-table {
-  display: flex;
-  flex-flow: column nowrap;
-  margin: 0.5rem;
-  line-height: 1.5;
-  flex: 1 1 auto;
-  border: 1px solid #d0d0d0;
-}
-
-.phrase-header {
-  display: none;
-  font-weight: 700;
-  font-size: 1.1em;
-  background-color: #f2f2f2;
-}
-
-.phrase-header > .phrase-data {
-  white-space: normal;
-}
-
-.phrase-row {
-  width: 100%;
-  display: flex;
-  flex-flow: row nowrap;
-}
-
-.phrase-row:nth-of-type(even) {
-  background-color: #f2f2f2;
-}
-
-.phrase-row:nth-of-type(odd) {
-  background-color: #ffffff;
-}
-
-.phrase-row:hover {
-  color: #C0163A;
-}
-
-.phrase-data {
-  display: flex;
-  flex-flow: row nowrap;
-  flex-grow: 1;
-  flex-basis: 0;
-  padding: 0.5em;
-  word-break: break-word;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  min-width: 0px;
-  white-space: nowrap;
-  border-bottom: 1px solid #d0d0d0;
+img {
+  width: 30%;
+  border-radius: 5px 5px 0 0;
 }
