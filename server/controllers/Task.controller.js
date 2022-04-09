@@ -38,4 +38,13 @@ let addTask = function (req, res) {
       });
   };
 
-module.exports = { addTask, selectAll };
+  let getTasksByIdGoal = (req,res)=>{
+    let {idGoal}= req.params
+    task.find({idGoal}).then((results) => {
+      res.status(200).send(results);
+    })
+    .catch((error) => {
+      res.status(500).send(error);
+    });
+};
+module.exports = { addTask, selectAll,getTasksByIdGoal };
