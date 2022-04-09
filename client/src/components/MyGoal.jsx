@@ -81,8 +81,8 @@ export default class MyGoal extends Component {
         {this.state.tasks.map((task,index)=>{
             return (
             <div key={index}>
-                <p>description : {task.description} status : {task.status+''}
-                <button onClick={()=>this.handleStatus(task._id)}> complete </button>
+                <p>YOU NEED TO *_* {task.description} *_* status : {task.status+''}
+                  <button onClick={()=>this.handleStatus(task._id)}> complete </button>
                 </p>
             </div>
             )
