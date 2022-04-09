@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import List from './components/List.jsx';
 import Home from './components/Home.jsx'
+import MyGoal from './components/MyGoal.jsx'
 
 
 class App extends React.Component {
@@ -11,11 +12,13 @@ class App extends React.Component {
     this.state = {
       items: [],
       view: 'list goals',
-      index:0
+      index:0,
+      goal:''
     }
     this.changeView = this.changeView.bind(this);
     this.renderView= this.renderView.bind(this);
     this.getGoals =  this.getGoals.bind(this)
+    this.getClickedGoal = this.getClickedGoal.bind(this)
   }
 
   getGoals(){
@@ -31,6 +34,12 @@ class App extends React.Component {
         console.log('err', err);
       }
     });
+  }
+  getClickedGoal(goal){
+    this.setState({
+      goal,
+      view:"my goal"
+    })
   }
 
   componentDidMount() {
@@ -51,12 +60,12 @@ class App extends React.Component {
         <Home  />
       );
     } else if (this.state.view === "list goals") {
-      return <h1> <List items={this.state.items} /> </h1>;
+      return <h1> <List items={this.state.items} getClickedGoal={this.getClickedGoal} /> </h1>;
     } 
     else if (this.state.view === "my goal") {
       console.log(this.state.view,'check the state')
 
-      return <div> <CreatePost/> </div>;
+      return <div> <MyGoal goal = {this.state.goal}/> </div>;
     }
   }
 
@@ -82,7 +91,7 @@ class App extends React.Component {
           <span className={this.state.view === 'create goal'
             ? 'nav-selected'
             : 'nav-unselected'}
-          onClick={() => this.changeView('create goal')}>
+          onClick={() => this.changeView('my goal')}>
            my Goal
           </span>
         </div>

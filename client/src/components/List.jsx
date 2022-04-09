@@ -8,7 +8,7 @@ const List = (props) => (
     you have {props.items.length} goals to acheive.
     {props.items.map((item, index) => (
       <div key={index}>
-        <ListItem item={item} />
+        <ListItem item={item} getClickedGoal={props.getClickedGoal} />
       </div>
     ))}
   </div>
