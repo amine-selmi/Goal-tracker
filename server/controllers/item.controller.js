@@ -1,9 +1,11 @@
 var dailyGoal = require("../database-mongo/Item.model.js");
 
+
 var selectAll = function (req, res) {
   dailyGoal
     .find({})
     .then((items) => {
+     // console.log(items[0].tasks,'goals')
       res.status(200).send(items);
     })
     .catch((error) => {
@@ -11,12 +13,26 @@ var selectAll = function (req, res) {
     });
 };
 
-let addDGoal = function (req, res) {
-  let { title, description, progress } = req.body;
+let getById = (req,res)=>{
+  let {id} = req.params
   dailyGoal
-    .insertMany({ title, description, progress })
+    .findById(id)
     .then((items) => {
-      console.log(items, "from addDGoal");
+      // console.log(items , 'from getbyid')
+      res.status(200).send(items);
+    })
+    .catch((error) => {
+      res.status(500).send("error");
+    });
+};
+
+let addDGoal = function (req, res) {
+  let { title, description } = req.body;
+  dailyGoal
+    .insertMany({ title, description })
+    .then((items) => {
+
+      // console.log(items, "from addDGoal");
       res.status(200).send(items);
     })
     .catch((error) => {
@@ -26,7 +42,7 @@ let addDGoal = function (req, res) {
 
 let deleteDGoal = (req, res) => {
   let { id } = req.params;
-  console.log(id, "from deleDGoal");
+  // console.log(id, "from deleDGoal");
   dailyGoal
     .deleteOne({ _id: id })
     .then((result) => res.status(200).send(result))
@@ -38,8 +54,11 @@ let updateDGoal = (req, res) => {
   let { id } = req.params;
   dailyGoal
     .updateOne({ _id: id }, { title, description })
-    .then((result) => res.status(200).send(result))
+    .then((result) => {
+      res.status(200).send(result)
+      // console.log(result,'updated version')
+    })
     .catch((err) => res.status(500).send(err));
 };
 
-module.exports = { selectAll, addDGoal, deleteDGoal,updateDGoal };
+module.exports = { selectAll, addDGoal, deleteDGoal,updateDGoal,getById };
