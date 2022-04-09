@@ -1,21 +1,50 @@
-import React from "react";
-// import img from '../../src/images/goal-setting.jpg';
+import React, { Component } from "react";
+import $ from 'jquery'
 
-const ListItem = (props) => (
-  <div>
-    <div className="card" onClick={()=> props.getClickedGoal(props.item)}>
-      <img
-        src="https://miro.medium.com/max/900/1*eywP5BUnq8xB_Q7Gtz1v1g.jpeg"
-        alt="Avatar"
-      />
-      <div className="container">
-        <p>title: {props.item.title}</p>
-        <p> progress: {props.item.progress}</p>
+export default class ListItem extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      completed:0
+    };
+    this.getCompleteTasks = this.getCompleteTasks.bind(this)
+  }
+
+  getCompleteTasks(){
+    $.ajax({
+      url: `/api/task/completed/${this.props.item._id}`,
+      success: (data) => {
+        console.log(data.length,'completed tasks')
+        this.setState({
+          completed:data.length
+        })
+      },
+      error: (err) => {
+        console.log('err', err);
+      }
+    });
+  }
+
+  componentDidMount(){
+    this.getCompleteTasks()
+  }
+  render() {
+    return (
+      <div>
+        <div className="card" onClick={() => this.props.getClickedGoal(this.props.item)}>
+          <img
+            src="https://miro.medium.com/max/900/1*eywP5BUnq8xB_Q7Gtz1v1g.jpeg"
+            alt="Avatar"
+          />
+          <div className="container">
+            <p> {this.props.item.title}</p>
+            <p> progress: { this.props.item.tasks.length !==0 ?
+            (this.state.completed * 100) / this.props.item.tasks.length : 0} %</p>
+          </div>
+        </div>
+
+        {console.log(this.props, "props list item")}
       </div>
-    </div>
-
-    {console.log(props, "props list item")}
-  </div>
-);
-
-export default ListItem;
+    );
+  }
+}

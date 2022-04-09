@@ -47,4 +47,26 @@ let addTask = function (req, res) {
       res.status(500).send(error);
     });
 };
-module.exports = { addTask, selectAll,getTasksByIdGoal };
+
+let updateTaskStatus = (req,res)=>{
+  let {id}= req.params 
+  task.updateOne({_id:id}, {status:true}).then((results) => {
+    res.status(200).send(results);
+  })
+  .catch((error) => {
+    res.status(500).send(error);
+  });
+};
+
+
+let getCompleteTasks = (req,res)=>{
+  let {idGoal}= req.params 
+  task.find({idGoal, status:true}).then((results) => {
+    res.status(200).send(results);
+  })
+  .catch((error) => {
+    res.status(500).send(error);
+  });
+};
+
+module.exports = { addTask, selectAll,getTasksByIdGoal,updateTaskStatus,getCompleteTasks };

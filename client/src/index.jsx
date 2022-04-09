@@ -35,6 +35,20 @@ class App extends React.Component {
       }
     });
   }
+  getCompleteTasks(id){
+    $.ajax({
+      url: `/api/task/completed/${id}`,
+      success: (data) => {
+        console.log(data)
+        this.setState({
+          items: data
+        })
+      },
+      error: (err) => {
+        console.log('err', err);
+      }
+    });
+  }
   getClickedGoal(goal){
     this.setState({
       goal,

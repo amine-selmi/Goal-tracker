@@ -14,6 +14,7 @@ export default class MyGoal extends Component {
     this.onChangeDescription = this.onChangeDescription.bind(this)
     this.handleSaveBtn = this.handleSaveBtn.bind(this)
     this.getTasks = this.getTasks.bind(this)
+    this.handleStatus = this.handleStatus.bind(this)
   }
 
   getTasks(){
@@ -54,6 +55,21 @@ export default class MyGoal extends Component {
     });
   }
 
+  handleStatus(idtask){
+      console.log(idtask, 'idtask from btn')
+    $.ajax({
+        method:'PATCH',
+        url: `/api/task/${idtask}`,
+        success: (data) => {
+          console.log(data)
+          this.getTasks()
+        },
+        error: (err) => {
+          console.log('err', err);
+        }
+      });
+  }
+
 
   render() {
     return (
@@ -65,7 +81,9 @@ export default class MyGoal extends Component {
         {this.state.tasks.map((task,index)=>{
             return (
             <div key={index}>
-                <p>description : {task.description} status : {task.status+''}</p>
+                <p>description : {task.description} status : {task.status+''}
+                <button onClick={()=>this.handleStatus(task._id)}> complete </button>
+                </p>
             </div>
             )
         })}

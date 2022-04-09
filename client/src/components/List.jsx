@@ -1,17 +1,33 @@
-import React from "react";
+import React, { Component } from 'react'
 import ListItem from "./ListItem.jsx";
 
 
-const List = (props) => (
-  <div>
+export default class List extends Component {
+  constructor(props){
+    super(props)
+    this.state={
+      completeTasks:[]
+    }
+  }
+
+  
+
+  render() {
+    return (
+      <div>
     
-    you have {props.items.length} goals to acheive.
-    {props.items.map((item, index) => (
+    you have {this.props.items.length} goals to acheive.
+    {this.props.items.map((item, index) => (
       <div key={index}>
-        <ListItem item={item} getClickedGoal={props.getClickedGoal} />
+        <ListItem item={item} getClickedGoal={this.props.getClickedGoal} />
       </div>
     ))}
   </div>
-);
+    )
+  }
+}
 
-export default List;
+
+
+
+
